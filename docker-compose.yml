@@ -1,0 +1,31 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - edge_network
+
+  edge_device:
+    build: ./edge_device
+    deploy:
+      replicas: 10
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    networks:
+      - edge_network
+
+  cloud_service:
+    build: ./cloud_service
+    networks:
+      - edge_network
+
+networks:
+  edge_network:
+    driver: bridge
