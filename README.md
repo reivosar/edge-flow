@@ -1,5 +1,3 @@
-### edge-flow
-
 ## Overview
 
 **edge-flow** is an edge computing system designed to process data from edge devices and forward it to a cloud service. The system consists of three main components: an edge device, a cloud service, and an Nginx server for load balancing. The project is implemented using Elixir and Erlang, with Docker for containerization.
@@ -29,8 +27,14 @@
    ```
 
 2. **Build and start the services**
+
    ```sh
    docker-compose up --build
+   ```
+
+3. **Execute below command**
+   ```sh
+   wrk -t12 -c400 -d30s http://localhost:80/data -s post.lua
    ```
 
 ## Configuration
@@ -49,19 +53,6 @@
 
 - JWT_SECRET for token-based authentication.
 - Set in the `docker-compose.yml` file.
-
-## Usage
-
-1. **Generate JWT**
-
-   ```sh
-   node generateToken.js
-   ```
-
-2. **Send Data Request**
-   ```sh
-   node sendRequest.js
-   ```
 
 ## Project Structure
 
